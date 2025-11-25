@@ -1,0 +1,201 @@
+proxy-groups:
+  - name: 手动选择
+    icon: https://cdn.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/select.png
+    include-all: true
+    type: select
+  - name: 故障转移
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Bypass.png
+    type: fallback
+    url: https://cp.cloudflare.com/generate_204
+    proxies:
+      - 手动选择
+      - 直连
+      - DIRECT
+    interval: 180
+    tolerance: 20
+    lazy: false
+  - name: 直连
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png
+    type: select
+    proxies:
+      - DIRECT
+      - 手动选择
+rule-providers:
+  Adobe:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/610841887/rule/refs/heads/main/adobe.yaml
+    path: ./ruleset/Adobe.yaml
+
+  常用工具域名:
+    type: http
+    behavior: domain
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/610841887/rule/refs/heads/main/cn.yaml
+    path: ./ruleset/cn.yaml
+  ADBlock:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://adrules.top/adrules-mihomo.mrs
+    path: ./ruleset/ADBlock.mrs
+  SogouInput:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://ruleset.skk.moe/Clash/non_ip/sogouinput.txt
+    path: ./ruleset/SogouInput.txt
+  StaticResources:
+    type: http
+    behavior: domain
+    format: text
+    interval: 86400
+    url: https://ruleset.skk.moe/Clash/domainset/cdn.txt
+    path: ./ruleset/StaticResources.txt
+  CDNResources:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://ruleset.skk.moe/Clash/non_ip/cdn.txt
+    path: ./ruleset/CDNResources.txt
+  TikTok:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/TikTok.list
+    path: ./ruleset/TikTok.list
+  EHentai:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/EHentai.list
+    path: ./ruleset/EHentai.list
+  SteamFix:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/SteamFix.list
+    path: ./ruleset/SteamFix.list
+  GoogleFCM:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/FirebaseCloudMessaging.list
+    path: ./ruleset/FirebaseCloudMessaging.list
+  AdditionalFilter:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/AdditionalFilter.list
+    path: ./ruleset/AdditionalFilter.list
+  AdditionalCDNResources:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/AdditionalCDNResources.list
+    path: ./ruleset/AdditionalCDNResources.list
+  Crypto:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/Crypto.list
+    path: ./ruleset/Crypto.list
+rules:
+  - RULE-SET,Adobe,REJECT
+  - RULE-SET,常用工具域名,故障转移,no-resolve
+  - AND,((DST-PORT,443),(NETWORK,UDP)),REJECT
+  - RULE-SET,ADBlock,故障转移
+  - RULE-SET,AdditionalFilter,故障转移
+  - RULE-SET,SogouInput,故障转移
+  - DOMAIN-SUFFIX,truthsocial.com,故障转移
+  - RULE-SET,StaticResources,故障转移
+  - RULE-SET,CDNResources,故障转移
+  - RULE-SET,AdditionalCDNResources,故障转移
+  - RULE-SET,Crypto,故障转移
+  - RULE-SET,EHentai,故障转移
+  - RULE-SET,TikTok,故障转移
+  - RULE-SET,SteamFix,直连
+  - RULE-SET,GoogleFCM,直连
+  - DOMAIN,services.googleapis.cn,故障转移
+  - GEOSITE,GOOGLE-PLAY@CN,直连
+  - GEOSITE,CATEGORY-AI-!CN,故障转移
+  - GEOSITE,TELEGRAM,故障转移
+  - GEOSITE,YOUTUBE,故障转移
+  - GEOSITE,NETFLIX,故障转移
+  - GEOSITE,SPOTIFY,故障转移
+  - GEOSITE,BAHAMUT,故障转移
+  - GEOSITE,BILIBILI,故障转移
+  - GEOSITE,MICROSOFT@CN,直连
+  - GEOSITE,PIKPAK,故障转移
+  - GEOSITE,GFW,故障转移
+  - GEOSITE,CN,直连
+  - GEOSITE,PRIVATE,直连
+  - GEOIP,NETFLIX,故障转移,no-resolve
+  - GEOIP,TELEGRAM,故障转移,no-resolve
+  - GEOIP,CN,直连
+  - GEOIP,PRIVATE,直连
+  - DST-PORT,22,故障转移
+  - MATCH,故障转移
+sniffer:
+  sniff:
+    TLS:
+      ports:
+        - 443
+        - 8443
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+    QUIC:
+      ports:
+        - 443
+        - 8443
+  override-destination: false
+  enable: true
+  force-dns-mapping: true
+  skip-domain:
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - +.push.apple.com
+dns:
+  enable: true
+  ipv6: false
+  prefer-h3: true
+  enhanced-mode: redir-host
+  default-nameserver:
+    - 119.29.29.29
+    - 223.5.5.5
+  nameserver:
+    - system
+    - 223.5.5.5
+    - 119.29.29.29
+    - 180.184.1.1
+  fallback:
+    - quic://dns0.eu
+    - https://dns.cloudflare.com/dns-query
+    - https://dns.sb/dns-query
+    - tcp://208.67.222.222
+    - tcp://8.26.56.2
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+    - tls://dot.pub
+geodata-mode: true
+geox-url:
+  geoip: https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat
+  geosite: https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat
+  mmdb: https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb
+  asn: https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb
