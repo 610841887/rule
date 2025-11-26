@@ -1,11 +1,11 @@
 proxy-groups:
   - name: TikTok
     type: url-test
+    include-all: true
     filter: ""
     exclude-filter: 香港|英国|印度
     hidden: true
     icon: ""
-    include-all: true
     url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 150
@@ -14,6 +14,7 @@ proxy-groups:
 
   - name: 🚀 节点选择
     type: select
+    include-all: true
     filter: ""
     exclude-filter: ""
     hidden: false
@@ -25,11 +26,11 @@ proxy-groups:
 
   - name: 🎈 自动选择
     type: url-test
+    include-all: true
     filter: ""
     exclude-filter: ""
     hidden: false
     icon: ""
-    include-all: true
     url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
