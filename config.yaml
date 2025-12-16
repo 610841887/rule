@@ -89,6 +89,12 @@ rule-providers:
     format: yaml
     url: https://raw.githubusercontent.com/610841887/rule/refs/heads/main/cn.yaml
 
+  Google:
+    type: http
+    behavior: domain
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Google/Google.yaml
+    
   category-ads-all:
     type: http
     url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs
