@@ -28,7 +28,7 @@ dns:
     - https://223.6.6.6/dns-query
   respect-rules: true
 
-#proxies:
+proxies:
   # 占位符，避免报错
   # - name: "Placeholder"
   #   type: ss
@@ -64,10 +64,10 @@ proxy-groups:
   - name: 🎵 TikTok
     type: select
     proxies:
-      - � 节点选择
+      - 🚀 节点选择
       - 🎯 全球直连
 
-  - name: �🐟 漏网之鱼
+  - name: 🐟 漏网之鱼
     type: select
     proxies:
       - 🚀 节点选择
