@@ -87,7 +87,9 @@ proxy-groups:
 
   - name: 🤖 人工智能
     type: select
-    include-all: true
+    proxies:
+      - 🚀 节点选择
+      - 🎯 全球直连
 
   - name: 🎵 TikTok
     type: select
