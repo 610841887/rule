@@ -71,7 +71,7 @@ proxy-groups:
     type: select
     proxies:
       - DIRECT
-    include-all-proxies: true
+    include-all: true
 
   - name: 🎯 全球直连
     type: select
