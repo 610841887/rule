@@ -158,14 +158,6 @@ rule-providers:
     path: ./rules/cn.yaml
     interval: 86400
     
-  ipv6:
-    type: http
-    behavior: domain
-    # 示例地址，实际请替换为包含 IPv6 域名的规则集，或者使用 ipcidr6 类型
-    url: "https://example.com/ipv6-rules.yaml" 
-    path: ./rules/ipv6.yaml
-    interval: 86400
-
   speedtest:
     type: http
     behavior: domain
