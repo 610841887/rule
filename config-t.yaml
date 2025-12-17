@@ -34,7 +34,7 @@ dns:
     - https://223.6.6.6/dns-query
   respect-rules: true
 
-proxies:
+#proxies:
   # 占位符，避免报错
   # - name: "Placeholder"
   #   type: ss
