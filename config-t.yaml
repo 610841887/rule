@@ -285,7 +285,6 @@ rules:
   - RULE-SET,TikTok,🎵 TikTok
   - RULE-SET,download_domainset,🎯 全球直连
   - RULE-SET,download_non_ip,🎯 全球直连
-  - RULE-SET,ipv6,🚀 节点选择
   - RULE-SET,proxy,🚀 节点选择
   - RULE-SET,cn,🎯 全球直连
   
