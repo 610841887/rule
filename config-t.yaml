@@ -63,7 +63,7 @@ sniffer:
   force-dns-mapping: true
   skip-domain:
     - Mijia Cloud
-    - dlg.io.mi.com
+    - dig.io.mi.com
     - +.push.apple.com
 
 proxy-groups:
