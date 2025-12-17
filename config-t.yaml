@@ -15,6 +15,12 @@ dns:
   fake-ip-filter:     #使用geosite域名集合以精简配置，也可使用规则集（ruleset）
     - geosite:private
     - geosite:category-ntp
+    - Mijia Cloud
+    - dig.io.mi.com
+    - localhost.ptlogin2.qq.com
+    - '*.icloud.com'
+    - '*.stun.*.*'
+    - '*.stun.*.*.*'
   use-hosts: false     #如有特殊需求请设为true
   use-system-hosts: false     #如有特殊需求请设为true
   nameserver:
@@ -36,6 +42,29 @@ proxies:
   #   port: 443
   #   cipher: chacha20-ietf-poly1305
   #   password: password
+
+sniffer:
+  sniff:
+    TLS:
+      ports:
+        - 443
+        - 8443
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+    QUIC:
+      ports:
+        - 443
+        - 8443
+  override-destination: false
+  enable: true
+  force-dns-mapping: true
+  skip-domain:
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - +.push.apple.com
 
 proxy-groups:
   - name: 🚀 节点选择
