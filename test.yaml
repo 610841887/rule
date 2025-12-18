@@ -8,8 +8,7 @@ ipv6: true
 geodata-mode: true
 geox-url:
   geoip: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat'
-  geosite: >-
-    https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat
+  geosite: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat'
   mmdb: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb'
   asn: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb'
 #external-controller: 127.0.0.1:9090
@@ -167,14 +166,6 @@ rule-providers:
     path: ./rules/cn.yaml
     interval: 86400
     
-  ipv6:
-    type: http
-    behavior: domain
-    # 示例地址，实际请替换为包含 IPv6 域名的规则集，或者使用 ipcidr6 类型
-    url: "https://example.com/ipv6-rules.yaml" 
-    path: ./rules/ipv6.yaml
-    interval: 86400
-
   speedtest:
     type: http
     behavior: domain
