@@ -19,8 +19,9 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:     #使用geosite域名集合以精简配置，也可使用规则集（ruleset）
-    - geosite:private
-    - geosite:category-ntp
+    - 'geosite:private'
+    - 'geosite:connectivity-check'
+    - 'geosite:cn'
     - Mijia Cloud
     - dig.io.mi.com
     - localhost.ptlogin2.qq.com
@@ -300,7 +301,6 @@ rules:
   - GEOSITE,YOUTUBE,🚀 节点选择
   - GEOSITE,NETFLIX,🚀 节点选择
   - GEOSITE,SPOTIFY,🚀 节点选择
-  - GEOSITE,MICROSOFT@CN,🎯 全球直连
   - GEOSITE,PIKPAK,🚀 节点选择
   - GEOSITE,GFW,🚀 节点选择
   - GEOSITE,CN,🎯 全球直连
