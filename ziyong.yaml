@@ -256,7 +256,6 @@ rule-providers:
     url: "https://ruleset.skk.moe/Clash/ip/china_ip.txt"
     path: ./sukkaw_ruleset/china_ip.txt
 
-
 rules:
   # 规则集 (Rule Sets)
   - RULE-SET,reject,REJECT
@@ -279,13 +278,33 @@ rules:
   - RULE-SET,download_non_ip,🎯 全球直连
   - RULE-SET,proxy,🚀 节点选择
   - RULE-SET,cn,🎯 全球直连
-  
+
+  # User Added GEOSITE
+  - GEOSITE,GOOGLE-PLAY@CN,🎯 全球直连
+  - GEOSITE,TELEGRAM,🚀 节点选择
+  - GEOSITE,YOUTUBE,🚀 节点选择
+  - GEOSITE,NETFLIX,🚀 节点选择
+  - GEOSITE,SPOTIFY,🚀 节点选择
+  - GEOSITE,PIKPAK,🚀 节点选择
+  - GEOSITE,GFW,🚀 节点选择
+  - GEOSITE,CN,🎯 全球直连
+  - GEOSITE,PRIVATE,🎯 全球直连
+
+  # User Added GEOIP
+  - GEOIP,NETFLIX,🚀 节点选择,no-resolve
+  - GEOIP,TELEGRAM,🚀 节点选择,no-resolve
+  - GEOIP,CN,🎯 全球直连
+  - GEOIP,PRIVATE,🎯 全球直连
+
   # 基础规则
-  - GEOIP,PRIVATE,DIRECT,no-resolve
   - GEOIP,LAN,DIRECT,no-resolve
 
-  # GeoIP 兜底
-  - GEOIP,CN,🎯 全球直连
-  
   # 最终兜底
   - MATCH,🐟 漏网之鱼
+
+geodata-mode: true
+geox-url:
+  geoip: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat'
+  geosite: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat'
+  mmdb: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb'
+  asn: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb'
