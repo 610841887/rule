@@ -278,6 +278,8 @@ rules:
   - RULE-SET,download_non_ip,🎯 全球直连
   - RULE-SET,proxy,🚀 节点选择
   - RULE-SET,cn,🎯 全球直连
+  - DOMAIN-SUFFIX,dsyhub.fun,🎯 全球直连
+  - IP-CIDR,103.219.195.193/32,🎯 全球直连,no-resolve
 
   # User Added GEOSITE
   - GEOSITE,GOOGLE-PLAY@CN,🎯 全球直连
