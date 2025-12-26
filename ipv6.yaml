@@ -265,8 +265,17 @@ rule-providers:
     url: "https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt"
     path: ./sukkaw_ruleset/china_ipv6.txt
 
+  meituan:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/MeiTuan/MeiTuan.list"
+    path: ./ruleset/MeiTuan.list
+
 rules:
   # 规则集 (Rule Sets)
+  - RULE-SET,meituan,🎯 全球直连
   - DOMAIN-SUFFIX,dsyhub.fun,🎯 全球直连
   - IP-CIDR,103.219.195.193/32,🎯 全球直连,no-resolve
   - RULE-SET,reject,REJECT
