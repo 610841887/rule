@@ -139,6 +139,13 @@ rule-providers:
     path: ./rules/netflix.yaml
     interval: 86400
 
+  github:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GitHub/GitHub.yaml"
+    path: ./rules/github.yaml
+    interval: 86400
+
   apple:
     type: http
     behavior: domain
@@ -273,6 +280,7 @@ rules:
   - RULE-SET,google,🚀 节点选择
   - RULE-SET,telegram,🚀 节点选择
   - RULE-SET,netflix,🚀 节点选择
+  - RULE-SET,github,🚀 节点选择
   - RULE-SET,apple,🎯 全球直连
   - RULE-SET,apple_cdn,🎯 全球直连
   - RULE-SET,apple_services,🎯 全球直连
