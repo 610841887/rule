@@ -1,0 +1,170 @@
+proxy-groups:
+  - name: "📲 App"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "🌐 Default"
+  - name: "🍎 Apple"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "🌐 Default"
+
+
+  - name: "🚝 测速工具"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "🌐 Default"
+  - name: "🎮 Steam"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "🌐 Default"
+
+  - name: "🟥 Adobe"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "REJECT"
+      - "🌐 Default"
+
+  - name: "🪟 Microsoft"
+    type: select
+    proxies:
+      - "DIRECT"
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "🌐 Default"
+
+  - name: "🌐 Default"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+  - name: "🐟 漏网之鱼"
+    type: select
+    proxies:
+      - "🌐 Default"
+      - "DIRECT"
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+
+  - name: "🔀 非标端口"
+    type: select
+    proxies:
+      - "🐟 遵循规则"
+      - "DIRECT"
+  - name: "🐟 遵循规则"
+    type: select
+    proxies:
+      - "🐟 漏网之鱼"
+  - name: "🧭 手动选择"
+    type: select
+    include-all: true
+  - name: "♻️ 自动选择"
+    type: url-test
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    include-all: true
+
+rule-providers:
+  "DIRECT-0":
+    type: http
+    behavior: domain
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct_Domain.yaml"
+    path: "./rule_providers/DIRECT-0.yaml"
+    interval: 28800
+  "DIRECT-1":
+    type: http
+    behavior: classical
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct_Classical_IP.yaml"
+    path: "./rule_providers/DIRECT-1.yaml"
+    interval: 28800
+  "_手动选择-2":
+    type: http
+    behavior: domain
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Proxy_Domain.yaml"
+    path: "./rule_providers/_手动选择-2.yaml"
+    interval: 28800
+  "_手动选择-3":
+    type: http
+    behavior: classical
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Proxy_Classical_IP.yaml"
+    path: "./rule_providers/_手动选择-3.yaml"
+    interval: 28800
+  "_非标端口-4":
+    type: http
+    behavior: classical
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Port_Direct.yaml"
+    path: "./rule_providers/_非标端口-4.yaml"
+    interval: 28800
+  "GameDownload":
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/GameDownload.yaml"
+    path: "./rule_providers/GameDownload.yaml"
+    interval: 86400
+
+rules:
+  - GEOSITE,adobe,🟥 Adobe
+  - GEOIP,adobe,🟥 Adobe,no-resolve
+  - GEOSITE,private,DIRECT
+  - GEOIP,private,DIRECT,no-resolve
+  - RULE-SET,DIRECT-0,DIRECT
+  - RULE-SET,DIRECT-1,DIRECT
+  - RULE-SET,_手动选择-2,🧭 手动选择
+  - RULE-SET,_手动选择-3,🧭 手动选择
+  - GEOSITE,cn,DIRECT
+  - GEOIP,cn,DIRECT,no-resolve
+  - GEOSITE,google-cn,DIRECT
+  # --- 新增：强制 Steam/Epic 等游戏下载走直连 ---
+  - DOMAIN-SUFFIX,steamcontent.com,DIRECT
+  - DOMAIN-SUFFIX,steamserver.net,DIRECT
+  - RULE-SET,GameDownload,DIRECT
+  # 游戏规则：确保 SteamCN 和国内游戏直连
+  - GEOSITE,steam@cn,DIRECT
+  - GEOSITE,category-games@cn,DIRECT
+  # 其余游戏流量（商店、社区、联机）走代理
+  - GEOSITE,category-games,🎮 Steam
+  - GEOSITE,category-public-tracker,DIRECT
+  - GEOSITE,Notion,📲 App
+  - GEOIP,Notion,📲 App,no-resolve
+  - GEOSITE,telegram,📲 App
+  - GEOIP,telegram,📲 App,no-resolve
+  - GEOSITE,openai,📲 App
+  - GEOSITE,category-ai-!cn,📲 App
+  - GEOSITE,apple,🍎 Apple
+  - GEOSITE,youtube,📲 App
+  - GEOSITE,netflix,📲 App
+  - GEOIP,netflix,📲 App,no-resolve
+  - GEOSITE,tiktok,📲 App
+  - GEOIP,tiktok,📲 App,no-resolve
+  - GEOSITE,instagram,📲 App
+  - GEOSITE,twitter,📲 App
+  - GEOSITE,github,📲 App
+  - GEOIP,github,📲 App,no-resolve
+  - GEOSITE,category-speedtest,🚝 测速工具
+  - GEOSITE,category-communication,📲 App
+  - GEOSITE,category-social-media-!cn,📲 App
+  - GEOSITE,cloudflare,📲 App
+  - GEOIP,cloudflare,📲 App,no-resolve
+  - GEOSITE,google,📲 App
+  - GEOIP,google,📲 App,no-resolve
+  - GEOSITE,microsoft,🪟 Microsoft
+  - GEOIP,microsoft,🪟 Microsoft,no-resolve
+  - GEOSITE,gfw,🧭 手动选择
+  - RULE-SET,_非标端口-4,🔀 非标端口
+  - MATCH,🐟 漏网之鱼
