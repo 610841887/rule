@@ -6,24 +6,13 @@ proxy-groups:
       - "🧭 手动选择"
       - "DIRECT"
       - "🌐 Default"
+      
   - name: "🍎 Apple"
     type: select
     proxies:
       - "♻️ 自动选择"
       - "🧭 手动选择"
       - "DIRECT"
-      - "🌐 Default"
-  - name: "🤖 ChatGPT"
-    type: select
-    proxies:
-      - "♻️ 自动选择"
-      - "🧭 手动选择"
-      - "🌐 Default"
-  - name: "🧠 AI"
-    type: select
-    proxies:
-      - "♻️ 自动选择"
-      - "🧭 手动选择"
       - "🌐 Default"
 
   - name: "🚝 测速工具"
@@ -64,6 +53,7 @@ proxy-groups:
       - "♻️ 自动选择"
       - "🧭 手动选择"
       - "DIRECT"
+      
   - name: "🐟 漏网之鱼"
     type: select
     proxies:
@@ -81,9 +71,11 @@ proxy-groups:
     type: select
     proxies:
       - "🐟 漏网之鱼"
+      
   - name: "🧭 手动选择"
     type: select
     include-all: true
+    
   - name: "♻️ 自动选择"
     type: url-test
     url: "https://www.gstatic.com/generate_204"
@@ -122,6 +114,12 @@ rule-providers:
     url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Port_Direct.yaml"
     path: "./rule_providers/_非标端口-4.yaml"
     interval: 28800
+  "GameDownload":
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/GameDownload.yaml"
+    path: "./rule_providers/GameDownload.yaml"
+    interval: 86400
 
 rules:
   - GEOSITE,adobe,🟥 Adobe
@@ -135,15 +133,22 @@ rules:
   - GEOSITE,cn,DIRECT
   - GEOIP,cn,DIRECT,no-resolve
   - GEOSITE,google-cn,DIRECT
+  # --- 新增：强制 Steam/Epic 等游戏下载走直连 ---
+  - DOMAIN-SUFFIX,steamcontent.com,DIRECT
+  - DOMAIN-SUFFIX,steamserver.net,DIRECT
+  - RULE-SET,GameDownload,DIRECT
+  # 游戏规则：确保 SteamCN 和国内游戏直连
+  - GEOSITE,steam@cn,DIRECT
   - GEOSITE,category-games@cn,DIRECT
-  - GEOSITE,category-game-platforms-download,DIRECT
+  # 其余游戏流量（商店、社区、联机）走代理
+  - GEOSITE,category-games,🎮 Steam
   - GEOSITE,category-public-tracker,DIRECT
   - GEOSITE,Notion,📲 App
   - GEOIP,Notion,📲 App,no-resolve
   - GEOSITE,telegram,📲 App
   - GEOIP,telegram,📲 App,no-resolve
-  - GEOSITE,openai,🤖 ChatGPT
-  - GEOSITE,category-ai-!cn,🧠 AI
+  - GEOSITE,openai,📲 App
+  - GEOSITE,category-ai-!cn,📲 App
   - GEOSITE,apple,🍎 Apple
   - GEOSITE,youtube,📲 App
   - GEOSITE,netflix,📲 App
@@ -155,7 +160,6 @@ rules:
   - GEOSITE,github,📲 App
   - GEOIP,github,📲 App,no-resolve
   - GEOSITE,category-speedtest,🚝 测速工具
-  - GEOSITE,steam,🎮 Steam
   - GEOSITE,category-communication,📲 App
   - GEOSITE,category-social-media-!cn,📲 App
   - GEOSITE,cloudflare,📲 App
