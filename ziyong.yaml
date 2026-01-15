@@ -1,330 +1,169 @@
-port: 7890
-socks-port: 7891
-mixed-port: 7893
-allow-lan: false
-mode: rule
-log-level: info
-ipv6: false
-#external-controller: 127.0.0.1:9090
-
-dns:
-  enable: true
-  ipv6: false      #如网络环境不支持IPv6请设为false
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  fake-ip-filter:     #使用geosite域名集合以精简配置，也可使用规则集（ruleset）
-    - geosite:private
-    - geosite:category-ntp
-    - Mijia Cloud
-    - dig.io.mi.com
-    - localhost.ptlogin2.qq.com
-    - '*.icloud.com'
-    - '*.stun.*.*'
-    - '*.stun.*.*.*'
-  use-hosts: false     #如有特殊需求请设为true
-  use-system-hosts: false     #如有特殊需求请设为true
-  nameserver:
-    - https://1.1.1.1/dns-query
-    - https://8.8.8.8/dns-query
-  proxy-server-nameserver:
-    - https://223.5.5.5/dns-query
-    - https://223.6.6.6/dns-query
-  direct-nameserver:
-    - https://223.5.5.5/dns-query
-    - https://223.6.6.6/dns-query
-  respect-rules: true
-
-#proxies:
-  # 占位符，避免报错
-  # - name: "Placeholder"
-  #   type: ss
-  #   server: server
-  #   port: 443
-  #   cipher: chacha20-ietf-poly1305
-  #   password: password
-
-sniffer:
-  sniff:
-    TLS:
-      ports:
-        - 443
-        - 8443
-    HTTP:
-      ports:
-        - 80
-        - 8080
-        - 8880
-    QUIC:
-      ports:
-        - 443
-        - 8443
-  override-destination: false
-  enable: true
-  force-dns-mapping: true
-  skip-domain:
-    - Mijia Cloud
-    - dig.io.mi.com
-    - +.push.apple.com
-
 proxy-groups:
-  - name: 🚀 节点选择
+  - name: "📲 App"
     type: select
     proxies:
-      - DIRECT
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "🌐 Default"
+  - name: "🍎 Apple"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "🌐 Default"
+  - name: "🤖 ChatGPT"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "🌐 Default"
+  - name: "🧠 AI"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "🌐 Default"
+
+  - name: "🚝 测速工具"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "🌐 Default"
+  - name: "🎮 Steam"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "🌐 Default"
+
+  - name: "🟥 Adobe"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+      - "REJECT"
+      - "🌐 Default"
+
+  - name: "🪟 Microsoft"
+    type: select
+    proxies:
+      - "DIRECT"
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "🌐 Default"
+
+  - name: "🌐 Default"
+    type: select
+    proxies:
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+      - "DIRECT"
+  - name: "🐟 漏网之鱼"
+    type: select
+    proxies:
+      - "🌐 Default"
+      - "DIRECT"
+      - "♻️ 自动选择"
+      - "🧭 手动选择"
+
+  - name: "🔀 非标端口"
+    type: select
+    proxies:
+      - "🐟 遵循规则"
+      - "DIRECT"
+  - name: "🐟 遵循规则"
+    type: select
+    proxies:
+      - "🐟 漏网之鱼"
+  - name: "🧭 手动选择"
+    type: select
+    include-all: true
+  - name: "♻️ 自动选择"
+    type: url-test
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
     include-all: true
 
-  - name: 🎯 全球直连
-    type: select
-    proxies:
-      - DIRECT
-
-  - name: 📈 网络测速
-    type: select
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-      - 🎯 全球直连
-
-  - name: 🤖 人工智能
-    type: select
-    proxies:
-      - 🚀 节点选择
-      - 🎯 全球直连
-
-  - name: 🎵 TikTok
-    type: select
-    proxies:
-      - 🚀 节点选择
-      - 🎯 全球直连
-
-  - name: 🐟 漏网之鱼
-    type: select
-    proxies:
-      - 🚀 节点选择
-      - 🎯 全球直连
-
 rule-providers:
-  reject:
+  "DIRECT-0":
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
-    path: ./rules/reject.yaml
-    interval: 86400
-
-  youtube:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/youtube.txt"
-    path: ./rules/youtube.yaml
-    interval: 86400
-
-  google:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
-    path: ./rules/google.yaml
-    interval: 86400
-    
-  telegram:
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct_Domain.yaml"
+    path: "./rule_providers/DIRECT-0.yaml"
+    interval: 28800
+  "DIRECT-1":
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
-    path: ./rules/telegram.yaml
-    interval: 86400
-
-  netflix:
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct_Classical_IP.yaml"
+    path: "./rule_providers/DIRECT-1.yaml"
+    interval: 28800
+  "_手动选择-2":
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/netflix.txt"
-    path: ./rules/netflix.yaml
-    interval: 86400
-
-  github:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GitHub/GitHub.yaml"
-    path: ./rules/github.yaml
-    interval: 86400
-
-  apple:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
-    path: ./rules/apple.yaml
-    interval: 86400
-
-  proxy:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
-    path: ./rules/proxy.yaml
-    interval: 86400
-
-  cn:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cn.txt"
-    path: ./rules/cn.yaml
-    interval: 86400
-    
-  speedtest:
-    type: http
-    behavior: domain
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/domainset/speedtest.txt"
-    path: ./sukkaw_ruleset/speedtest.txt
-
-  download_domainset:
-    type: http
-    behavior: domain
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/domainset/download.txt"
-    path: ./sukkaw_ruleset/download_domainset.txt
-
-  download_non_ip:
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Proxy_Domain.yaml"
+    path: "./rule_providers/_手动选择-2.yaml"
+    interval: 28800
+  "_手动选择-3":
     type: http
     behavior: classical
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/non_ip/download.txt"
-    path: ./sukkaw_ruleset/download_non_ip.txt
-
-  ai_non_ip:
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Proxy_Classical_IP.yaml"
+    path: "./rule_providers/_手动选择-3.yaml"
+    interval: 28800
+  "_非标端口-4":
     type: http
     behavior: classical
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/non_ip/ai.txt"
-    path: ./sukkaw_ruleset/ai_non_ip.txt
-
-  apple_intelligence_non_ip:
-    type: http
-    behavior: classical
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/non_ip/apple_intelligence.txt"
-    path: ./sukkaw_ruleset/apple_intelligence_non_ip.txt
-
-  TikTok:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: "https://gcore.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/TikTok.list"
-    path: ./ruleset/TikTok.list
-
-  apple_cdn:
-    type: http
-    behavior: domain
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/domainset/apple_cdn.txt"
-    path: ./sukkaw_ruleset/apple_cdn.txt
-
-  apple_services:
-    type: http
-    behavior: classical
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/non_ip/apple_services.txt"
-    path: ./sukkaw_ruleset/apple_services.txt
-
-  apple_cn_non_ip:
-    type: http
-    behavior: classical
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt"
-    path: ./sukkaw_ruleset/apple_cn_non_ip.txt
-
-  microsoft_cdn_non_ip:
-    type: http
-    behavior: classical
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/non_ip/microsoft_cdn.txt"
-    path: ./sukkaw_ruleset/microsoft_cdn_non_ip.txt
-
-  microsoft_non_ip:
-    type: http
-    behavior: classical
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/non_ip/microsoft.txt"
-    path: ./sukkaw_ruleset/microsoft_non_ip.txt
-
-  china_ip:
-    type: http
-    behavior: ipcidr
-    format: text
-    interval: 43200
-    url: "https://ruleset.skk.moe/Clash/ip/china_ip.txt"
-    path: ./sukkaw_ruleset/china_ip.txt
-  
-  meituan:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/MeiTuan/MeiTuan.list"
-    path: ./ruleset/MeiTuan.list
-  
+    url: "https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Port_Direct.yaml"
+    path: "./rule_providers/_非标端口-4.yaml"
+    interval: 28800
 
 rules:
-  # 规则集 (Rule Sets)
-  - RULE-SET,reject,REJECT
-  - RULE-SET,meituan,🎯 全球直连
-  - RULE-SET,youtube,🚀 节点选择
-  - RULE-SET,google,🚀 节点选择
-  - RULE-SET,telegram,🚀 节点选择
-  - RULE-SET,netflix,🚀 节点选择
-  - RULE-SET,github,🚀 节点选择
-  - RULE-SET,apple,🎯 全球直连
-  - RULE-SET,apple_cdn,🎯 全球直连
-  - RULE-SET,apple_services,🎯 全球直连
-  - RULE-SET,apple_cn_non_ip,🎯 全球直连
-  - RULE-SET,microsoft_cdn_non_ip,🎯 全球直连
-  - RULE-SET,microsoft_non_ip,🎯 全球直连
-  - RULE-SET,china_ip,🎯 全球直连
-  - RULE-SET,speedtest,📈 网络测速
-  - RULE-SET,ai_non_ip,🤖 人工智能
-  - RULE-SET,apple_intelligence_non_ip,🤖 人工智能
-  - RULE-SET,TikTok,🎵 TikTok
-  - RULE-SET,download_domainset,🎯 全球直连
-  - RULE-SET,download_non_ip,🎯 全球直连
-  - RULE-SET,proxy,🚀 节点选择
-  - RULE-SET,cn,🎯 全球直连
-  - DOMAIN-SUFFIX,dsyhub.fun,🎯 全球直连
-  - IP-CIDR,103.219.195.193/32,🎯 全球直连,no-resolve
-
-  # User Added GEOSITE
-  - GEOSITE,GOOGLE-PLAY@CN,🎯 全球直连
-  - GEOSITE,TELEGRAM,🚀 节点选择
-  - GEOSITE,YOUTUBE,🚀 节点选择
-  - GEOSITE,NETFLIX,🚀 节点选择
-  - GEOSITE,SPOTIFY,🚀 节点选择
-  - GEOSITE,PIKPAK,🚀 节点选择
-  - GEOSITE,GFW,🚀 节点选择
-  - GEOSITE,CN,🎯 全球直连
-  - GEOSITE,PRIVATE,🎯 全球直连
-
-  # User Added GEOIP
-  - GEOIP,NETFLIX,🚀 节点选择,no-resolve
-  - GEOIP,TELEGRAM,🚀 节点选择,no-resolve
-  - GEOIP,CN,🎯 全球直连
-  - GEOIP,PRIVATE,🎯 全球直连
-
-  # 基础规则
-  - GEOIP,LAN,DIRECT,no-resolve
-
-  # 最终兜底
+  - GEOSITE,adobe,🟥 Adobe
+  - GEOIP,adobe,🟥 Adobe,no-resolve
+  - GEOSITE,private,DIRECT
+  - GEOIP,private,DIRECT,no-resolve
+  - RULE-SET,DIRECT-0,DIRECT
+  - RULE-SET,DIRECT-1,DIRECT
+  - RULE-SET,_手动选择-2,🧭 手动选择
+  - RULE-SET,_手动选择-3,🧭 手动选择
+  - GEOSITE,cn,DIRECT
+  - GEOIP,cn,DIRECT,no-resolve
+  - GEOSITE,google-cn,DIRECT
+  - GEOSITE,category-games@cn,DIRECT
+  - GEOSITE,category-game-platforms-download,DIRECT
+  - GEOSITE,category-public-tracker,DIRECT
+  - GEOSITE,Notion,📲 App
+  - GEOIP,Notion,📲 App,no-resolve
+  - GEOSITE,telegram,📲 App
+  - GEOIP,telegram,📲 App,no-resolve
+  - GEOSITE,openai,🤖 ChatGPT
+  - GEOSITE,category-ai-!cn,🧠 AI
+  - GEOSITE,apple,🍎 Apple
+  - GEOSITE,youtube,📲 App
+  - GEOSITE,netflix,📲 App
+  - GEOIP,netflix,📲 App,no-resolve
+  - GEOSITE,tiktok,📲 App
+  - GEOIP,tiktok,📲 App,no-resolve
+  - GEOSITE,instagram,📲 App
+  - GEOSITE,twitter,📲 App
+  - GEOSITE,github,📲 App
+  - GEOIP,github,📲 App,no-resolve
+  - GEOSITE,category-speedtest,🚝 测速工具
+  - GEOSITE,steam,🎮 Steam
+  - GEOSITE,category-communication,📲 App
+  - GEOSITE,category-social-media-!cn,📲 App
+  - GEOSITE,cloudflare,📲 App
+  - GEOIP,cloudflare,📲 App,no-resolve
+  - GEOSITE,google,📲 App
+  - GEOIP,google,📲 App,no-resolve
+  - GEOSITE,microsoft,🪟 Microsoft
+  - GEOIP,microsoft,🪟 Microsoft,no-resolve
+  - GEOSITE,gfw,🧭 手动选择
+  - RULE-SET,_非标端口-4,🔀 非标端口
   - MATCH,🐟 漏网之鱼
-
-geodata-mode: true
-geox-url:
-  geoip: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat'
-  geosite: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat'
-  mmdb: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb'
-  asn: 'https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb'
