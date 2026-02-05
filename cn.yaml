@@ -1,11 +1,11 @@
 payload:
-  - +.xiyouzhaoci.com
-  - +.sellersprite.com
-  - +.lingxingerp.com
-  - +.lingxing.com
-  - +.languwin.com
-  - +.xysamz.com
-  - +.aliprice.com
-  - +.dsyhub.fun
-  - +.dsy0201.dpdns.org
-  - +.dsy610.dpdns.org
+  - DOMAIN-SUFFIX,xiyouzhaoci.com
+  - DOMAIN-SUFFIX,sellersprite.com
+  - DOMAIN-SUFFIX,lingxingerp.com
+  - DOMAIN-SUFFIX,lingxing.com
+  - DOMAIN-SUFFIX,languwin.com
+  - DOMAIN-SUFFIX,xysamz.com
+  - DOMAIN-SUFFIX,aliprice.com
+  - DOMAIN-SUFFIX,dsyhub.fun
+  - DOMAIN-SUFFIX,dsy0201.dpdns.org
+  - DOMAIN-SUFFIX,dsy610.dpdns.org
